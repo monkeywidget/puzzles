@@ -68,8 +68,15 @@ while parent_fib < 10000000
   new_fib = parent_fib + grandparent_fib
   # print "Fibonacci: " + new_fib.to_s + "\n"
 
-  print "the prime divisors for " + new_fib.to_s + 
-          " are [" + prime_divisors(new_fib).to_a.sort.to_s + "]\n"
+  divisors = prime_divisors(new_fib)
+  if divisors.size > 0           # don't print this for primes
+  	print "the prime divisors for " + new_fib.to_s + 
+          " are [" 
+  		divisors.to_a.sort.each do |element_as_string|
+			print " " + element_as_string.to_s
+  		end
+  	print " ]\n"
+  end
 
   grandparent_fib = parent_fib
   parent_fib = new_fib

@@ -23,27 +23,29 @@ import math
 
 # possible extra credit (and fun?):
 #  could condense "len(array) - 1 - x"
-#  could condense "array[?] = len(array) - 1 - x"
+#  could condense "array[?] = len(array) - 1 - x" e.g. as a lambda
 # 
 # optimise instead for brevity
 # make into a one-liner
+
+def debug_print_array(label, array):
+    for x in array:
+        print label + ": a[" + str(x) + "] = " + str(array[x])
+
 
 def main():
 
     array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-    for x in array:
-        print "INPUT: a[" + str(x) + "] = " + str(array[x])
-
+    debug_print_array("INPUT", array)
 
     for x in range (0, int(math.ceil(len(array)/2))):
         # print "evaluating " + str(x) + ", " + str(len(array) - 1 - x)
-        array[x] = array[x] ^ array[len(array) - 1 - x]
+        array[x]                  = array[x] ^ array[len(array) - 1 - x]
         array[len(array) - 1 - x] = array[x] ^ array[len(array) - 1 - x]
-        array[x] = array[x] ^ array[len(array)-1-x]
+        array[x]                  = array[x] ^ array[len(array)-1-x]
 
-    for x in array:
-        print "OUTPUT: a[" + str(x) + "] = " + str(array[x])
+    debug_print_array("\t\tOUTPUT", array)
 
 
 if __name__ == "__main__":
