@@ -1,5 +1,3 @@
-import math
-
 # algorithm: 
 # - reverses [0 1 2 3 4 5 6 7 8 9]
 # - print array to stdout
@@ -21,6 +19,10 @@ import math
 #  triple XOR trick is not real pretty looking
 #  assumes len(array) is fast
 
+# analysis:
+# in the odd-numbered array case, the int division operation gives the previous element
+# so the "middle" element is left untouched (as desired).
+
 # possible extra credit (and fun?):
 #  could condense "len(array) - 1 - x"
 #  could condense "array[?] = len(array) - 1 - x" e.g. as a lambda
@@ -35,11 +37,12 @@ def debug_print_array(label, array):
 
 def main():
 
-    array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+#    array = [0, 1, 2, 3, 4, 5, 6, 7, 8 ]
 
     debug_print_array("INPUT", array)
 
-    for x in range (0, int(math.ceil(len(array)/2))):
+    for x in range (0, len(array)/2):
         # print "evaluating " + str(x) + ", " + str(len(array) - 1 - x)
         array[x]                  = array[x] ^ array[len(array) - 1 - x]
         array[len(array) - 1 - x] = array[x] ^ array[len(array) - 1 - x]
