@@ -22,7 +22,7 @@ def eliminateDuplicatesWithoutPreservingOrder (sourceString)
 end
 
 # passed a string
-def eliminateDuplicatesAndPreserveOrderForFirst (sourceString)
+def eliminateDuplicatesAndPreserveOrderForFirst_v1 (sourceString)
 
   first_hash = Hash.new
 
@@ -60,11 +60,25 @@ def eliminateDuplicatesAndPreserveOrderForFirst (sourceString)
 end
 
 
+# passed a string
+def eliminateDuplicatesAndPreserveOrderForLast_v1 (sourceString)
+  # NOTE: slightly less efficient due to two reverses!
+  # the nicer way to do it is to refactor the above, 
+  #  removing the "if not first_hash.has_key?(single_char)" clause in the add to hash
+  return eliminateDuplicatesAndPreserveOrderForFirst_v1(sourceString.reverse).reverse
+end
+
+# v2:
+# TODO: REWRITE and instead of rehashing the hash, append to a string
+#   still keep track of presence by using a hash
+
 
 
 
 finalString = eliminateDuplicatesWithoutPreservingOrder("anadsfasdfads")
 print "UNORDERED: \"#{finalString}\"\n"
-finalString = eliminateDuplicatesAndPreserveOrderForFirst("anadsfasdfads")
-print "ORDERED: \"#{finalString}\"\n"
+finalString = eliminateDuplicatesAndPreserveOrderForFirst_v1("anadsfasdfads")
+print "ORDERED BY FIRST: \"#{finalString}\"\n"
+finalString = eliminateDuplicatesAndPreserveOrderForLast_v1("anadsfasdfads")
+print "ORDERED BY LAST: \"#{finalString}\"\n"
 
