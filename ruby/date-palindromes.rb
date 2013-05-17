@@ -133,22 +133,23 @@ def palindrome_date_before ( starting_date )
 
   # print "DEBUG: starting from year #{starting_date_year_beginning}#{starting_date_year_ending}\n"
 
-  # find the largest year before this one and count backwards
-  
+  # NOTE: can we write a "next_eligible_year_before (year)" ?  Should we?
+
+  # find the largest year before this one and count backwards - most significant digits first
   MmDdYyyyDate.candidate_year_beginnings.sort.reverse.each do |year_string_start|
+
+     # TODO: MmDdYyyyDate.after_palindrome_date_from_year_beginning?
 
     next if year_string_start > starting_date_year_beginning
 
     MmDdYyyyDate.candidate_year_endings.sort.reverse.each do |year_string_ending|
 
+      # TODO: MmDdYyyyDate.after_palindrome_date_from_year?
+
       # check ending of year is before; if not skip to the next one
       next if starting_date.year < year_string_start + year_string_ending
 
       # for this year, construct the month and day
-
-      this_date = "#{year_string_ending.reverse}-#{year_string_start.reverse}" + 
-                                     "-#{year_string_start}#{year_string_ending}"
-      this_mmddyyyy_date = MmDdYyyyDate.new(this_date)
 
       # if the year is this year, we have to check the month, then day is before now
       if starting_date.year == year_string_start + year_string_ending
@@ -158,8 +159,13 @@ def palindrome_date_before ( starting_date )
         next if (year_string_ending.reverse == starting_date.month) and (year_string_start.reverse > starting_date.day)
       end
 
-      # if the month/day is a valid combination then this is the result
 
+      # TODO: refactor more object oriented (more as methods in MmDdYyyyDate)
+      this_date = "#{year_string_ending.reverse}-#{year_string_start.reverse}" + 
+                                     "-#{year_string_start}#{year_string_ending}"
+      this_mmddyyyy_date = MmDdYyyyDate.new(this_date)
+
+      # if the month/day is a valid combination then this is the result
       if this_mmddyyyy_date.valid?
         # print "#{this_mmddyyyy_date} is the next previous date\n\n"
         return this_mmddyyyy_date
