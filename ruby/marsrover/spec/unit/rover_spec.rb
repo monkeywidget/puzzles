@@ -7,21 +7,19 @@ describe Rover do
   end
 
   it "should allow a new Rover with valid coordinates and direction" do
-    Rover.new(1,1,'N').should_not raise_error
+    expect{Rover.new(1,1,'N')}.to_not raise_exception
   end
-
   it "should reject a new Rover with invalid negative coordinates" do
-    Rover.new(1,-1,'N').should raise_error
+    expect{Rover.new(1,-1,'N')}.to raise_exception
   end
 
   it "should reject a new Rover with invalid non-integer coordinates" do
-    Rover.new(1,1.0,'N').should raise_error
+    expect{Rover.new(1,1.0,'N')}.to raise_exception
   end
 
   it "should reject a new Rover with invalid direction" do
-    Rover.new(1,1,'g').should raise_error
+    expect{Rover.new(1,1,'g')}.to raise_exception
   end
-
 
   it "should return the current coordinates" do
     @rover.x_location.should be 1
@@ -32,17 +30,28 @@ describe Rover do
     @rover.facing_direction.should eql 'N'
   end
 
+  it "should load in a route plan" do
+    test_route = 'LMLMLMLMM'
+    @rover.travel_instructions=(test_route)
+    expect(@rover.travel_instructions).to eql(test_route)
+  end
+
+  it "should not load in an invalid route plan" do
+    test_route = 'LMF'
+    expect{@rover.travel_instructions=(test_route)}.to raise_error
+    expect(@rover.travel_instructions).to be_nil
+  end
+
+  it "should recognize an invalid route plan" do
+    expect{@rover.travel_instructions=('a')}.to raise_error
+    expect{@rover.travel_instructions=('LMRa')}.to raise_error
+    expect{@rover.travel_instructions=('   LMR')}.to raise_error
+  end
+
 
 =begin
 
-validates initial fields
-
-loads and validates a route plan
-
-tells its current position and face direction
-
-calculates their next position given current position and different movement arguments
-
+calculates its next position given current position and different movement arguments
 
 =end
 

@@ -1,17 +1,17 @@
 Mars Rover technical Challenge
 ==============================
 
-
-Problem Statement
------------------
-
 * Source: https://code.google.com/p/marsrovertechchallenge/
 
 The problem below requires some kind of input. You are free to implement any mechanism for feeding input into your solution (for example, using hard coded data within a unit test). You should provide sufficient evidence that your solution is complete by, as a minimum, indicating that it works correctly against the supplied test data.
 
 We highly recommend using a unit testing framework such as JUnit or NUnit. Even if you have not used it before, it is simple to learn and incredibly useful.
 
-The code you write should be of production quality, and most importantly, it should be code you are proud of. MARS ROVERS
+The code you write should be of production quality, and most importantly, it should be code you are proud of.
+
+
+Problem Statement
+-----------------
 
 A squad of robotic rovers are to be landed by NASA on a plateau on Mars.
 
@@ -72,17 +72,27 @@ Documentation
 
 * Markdown syntax
     * http://daringfireball.net/projects/markdown/syntax
-* rspec
-    * http://rspec.info
-    * http://blog.davidchelimsky.net/2007/05/14/an-introduction-to-rspec-part-i/
-    * http://rubydoc.info/github/rspec/rspec-core/frames
-    * http://rspec.rubyforge.org/rspec/1.1.8/
 
 
 Run the Tests
 =============
 
- rspec spec/unit/rover_spec.rb
+ $ rspec spec
+
+Run a single test
+-----------------
+
+ $ rspec spec/unit/rover_spec.rb
+
+Rspec Reference
+---------------
+
+* rspec
+    * http://rspec.info
+    * https://github.com/rspec/rspec-expectations
+    * http://blog.davidchelimsky.net/2007/05/14/an-introduction-to-rspec-part-i/
+    * http://rubydoc.info/github/rspec/rspec-core/frames
+    * http://rspec.rubyforge.org/rspec/1.1.8/
 
 
 Run the Application
