@@ -1,8 +1,11 @@
 Mars Rover technical Challenge
 ==============================
 
+
 Problem Statement
 -----------------
+
+* Source: https://code.google.com/p/marsrovertechchallenge/
 
 The problem below requires some kind of input. You are free to implement any mechanism for feeding input into your solution (for example, using hard coded data within a unit test). You should provide sufficient evidence that your solution is complete by, as a minimum, indicating that it works correctly against the supplied test data.
 
@@ -67,20 +70,19 @@ Expected Output:
 Documentation
 =============
 
-Source
-* https://code.google.com/p/marsrovertechchallenge/
-Markdown syntax
-* http://daringfireball.net/projects/markdown/syntax
-rspec
-* http://blog.davidchelimsky.net/2007/05/14/an-introduction-to-rspec-part-i/
-* http://rubydoc.info/github/rspec/rspec-core/frames
-* http://rspec.rubyforge.org/rspec/1.1.8/
+* Markdown syntax
+    * http://daringfireball.net/projects/markdown/syntax
+* rspec
+    * http://rspec.info
+    * http://blog.davidchelimsky.net/2007/05/14/an-introduction-to-rspec-part-i/
+    * http://rubydoc.info/github/rspec/rspec-core/frames
+    * http://rspec.rubyforge.org/rspec/1.1.8/
 
 
 Run the Tests
 =============
 
- spec spec/unit/rover_spec.rb
+ rspec spec/unit/rover_spec.rb
 
 
 Run the Application

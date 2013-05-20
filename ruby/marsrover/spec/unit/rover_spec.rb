@@ -1,25 +1,27 @@
+require 'spec_helper'
+require 'rover'
+
+describe Rover do
+  before do
+    @rover = Rover.new(1,1,'N')
+  end
+
+  it "should reject a new Rover with invalid coordinates" do
+    Hash.new.should == {}
+  end
+
 =begin
 
-loads in a route plan
+validates initial fields
 
-writes to the map when it moves
+loads and validates a route plan
 
-records its current position
+tells its current position and face direction
 
 calculates their next position given current position and different movement arguments
 
 
 =end
-
-describe Rover do
-  before do
-    @rover = Rover.new(1,1)
-  end
-
-  it "should ..." do
-    Hash.new.should == {}
-  end
-
 
 
 
