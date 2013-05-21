@@ -33,7 +33,8 @@ All coordinates are integers and start at 0
     true
   end
 
-  def can_move_rover_into?(x_coord, y_coord)
+  def can_move_rover_into?(xy_coords)
+    x_coord, y_coord = xy_coords
     return false unless valid_coords?(x_coord, y_coord)
 
     @rover_grid[x_coord][y_coord].nil?      # avoid collisions!
@@ -43,8 +44,8 @@ All coordinates are integers and start at 0
   # doesn't distinguish between this and other rovers,
   #   i.e. a rover asking to move to the square it is already in will be denied
   def mark_rover_at(rover, xy_coords)
+    return false unless can_move_rover_into?(xy_coords)
     x_coord, y_coord = xy_coords
-    return false unless can_move_rover_into?(x_coord, y_coord)
 
     @rover_grid[rover.x_location][rover.y_location] = nil
     @rover_grid[x_coord][y_coord]= rover

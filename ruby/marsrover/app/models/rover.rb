@@ -6,9 +6,9 @@ class Rover
 
   def initialize (x_start, y_start, face_start)
 
-    raise ArgumentError, 'coordinates must be integers' unless x_start.integer? and y_start.integer?
-    raise ArgumentError, 'coordinates must be non-negative' unless (x_start > -1) and (y_start > -1)
-    raise ArgumentError, 'direction must be one of N S E W' unless ['N', 'S', 'E', 'W'].include?(face_start)
+    raise ArgumentError, "coordinates (#{x_start},#{y_start}) must be integers" unless x_start.integer? and y_start.integer?
+    raise ArgumentError, "coordinates (#{x_start},#{y_start}) must be non-negative" unless (x_start > -1) and (y_start > -1)
+    raise ArgumentError, "direction \'#{face_start}\' must be one of N S E W" unless ['N', 'S', 'E', 'W'].include?(face_start)
 
     @x_location = x_start
     @y_location = y_start

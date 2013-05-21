@@ -33,18 +33,18 @@ describe RouteMap do
   end
 
   it "should advise rovers to not move into an invalid square" do
-    expect(@route_map.can_move_rover_into?(0,0)).to be_true
-    expect(@route_map.can_move_rover_into?(-1,0)).to be_false
-    expect(@route_map.can_move_rover_into?(6,0)).to be_false
+    expect(@route_map.can_move_rover_into?([0,0])).to be_true
+    expect(@route_map.can_move_rover_into?([-1,0])).to be_false
+    expect(@route_map.can_move_rover_into?([6,0])).to be_false
   end
 
   it "should advise rovers to not move into an occupied square" do
-    expect(@route_map.can_move_rover_into?(0,0)).to be_true
+    expect(@route_map.can_move_rover_into?([0,0])).to be_true
 
     rover = Rover.new(0,0,'N')
     @route_map.mark_rover_at(rover, [0,0])
 
-    expect(@route_map.can_move_rover_into?(0,0)).to be_false
+    expect(@route_map.can_move_rover_into?([0,0])).to be_false
   end
 
   it "should not move a rover if the move cannot be completed" do
