@@ -79,10 +79,15 @@ Run the Tests
 
  $ rspec spec
 
-Run a single test
+Run a single spec
 -----------------
 
  $ rspec spec/unit/rover_spec.rb
+
+Run a single test in a spec
+---------------------------
+
+ $ rspec spec/unit/rover_spec.rb -e 'Rover should execute its next turn on a clock tick'
 
 Rspec Reference
 ---------------

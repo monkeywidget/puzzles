@@ -38,16 +38,11 @@ All coordinates are integers and start at 0
     @rover_grid[x_coord][y_coord].nil?      # avoid collisions!
   end
 
-  def move_rover_into(rover, x_coord, y_coord)
+
+  def mark_rover_at(rover, x_coord, y_coord)
     return false unless can_move_rover_into?(x_coord, y_coord)
 
-
     @rover_grid[rover.x_coord][rover.y_coord] = nil
-
-    # RFE: revert if rover fails to move for some reason
-
-    rover.x_coord = x_coord
-    rover.y_coord = y_coord
     @rover_grid[x_coord][y_coord]= rover
 
     # mark the new grid square photographed

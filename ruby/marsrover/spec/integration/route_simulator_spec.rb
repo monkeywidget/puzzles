@@ -6,7 +6,10 @@ creates a map given args
 
 creates rovers given args
 
-"moves" a rover on the map
+retains rover order
+
+map: "moves" a rover on the map
+rover: updates a rover with new info when moved, including clock tick
 
 cannot move a rover off the grid
 

@@ -43,7 +43,6 @@ knows to not move a rover into a square holding another rover
 does not update a rover with new info when move fails for square holding another rover
 
 writes to the photographed map when rover moves
-updates a rover with new info when moved
 clears previous rover square when rover is moved
 
 =end
