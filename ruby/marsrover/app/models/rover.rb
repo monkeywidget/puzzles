@@ -89,6 +89,7 @@ class Rover
     end
   end
 
+  # must be run after updating the map!
   def clock_tick
     instruction = @travel_instructions[@current_instruction]
     case instruction

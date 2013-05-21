@@ -6,10 +6,11 @@ The map has no negative coordinates
 All coordinates are integers and start at 0
 
 =end
-
+  attr_reader :rover_grid
   # @rover_grid is an array of arrays, each cell holding references to Rovers or nil
 
-  # RFE: @rover_locations is a hash of all the rovers
+  attr_reader :photographed_grid
+  # @photographed_grid is an array of arrays, each cell holding "true" if the square has been photographed
   # RFE: track which angles have been photographed
 
   def initialize ( x_size, y_size )
@@ -38,16 +39,18 @@ All coordinates are integers and start at 0
     @rover_grid[x_coord][y_coord].nil?      # avoid collisions!
   end
 
-
-  def mark_rover_at(rover, x_coord, y_coord)
+  # called BEFORE the rover is updated
+  # doesn't distinguish between this and other rovers,
+  #   i.e. a rover asking to move to the square it is already in will be denied
+  def mark_rover_at(rover, xy_coords)
+    x_coord, y_coord = xy_coords
     return false unless can_move_rover_into?(x_coord, y_coord)
 
-    @rover_grid[rover.x_coord][rover.y_coord] = nil
+    @rover_grid[rover.x_location][rover.y_location] = nil
     @rover_grid[x_coord][y_coord]= rover
 
     # mark the new grid square photographed
     @photographed_grid[x_coord][y_coord] = true
-
     true
   end
 
