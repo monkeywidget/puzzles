@@ -16,21 +16,23 @@ LMLMLMLMM
 3 3 E
 
 MMRMMRMRRM
-    eos
+
+eos
 
     @test_output = <<-eos
 1 3 N
 
 5 1 E
+
 eos
 
   end
 
   it "should create a map" do
-    expect(@route_simulator.map.rover_grid.size).to eql(5)
-    expect(@route_simulator.map.rover_grid[2].size).to eql(5)
-    expect(@route_simulator.map.photographed_grid.size).to eql(5)
-    expect(@route_simulator.map.photographed_grid[2].size).to eql(5)
+    expect(@route_simulator.map.rover_grid.size).to eql(6)
+    expect(@route_simulator.map.rover_grid[2].size).to eql(6)
+    expect(@route_simulator.map.photographed_grid.size).to eql(6)
+    expect(@route_simulator.map.photographed_grid[2].size).to eql(6)
   end
 
   it "should have an initially-empty list of rovers" do
@@ -77,7 +79,7 @@ eos
     expect(@route_simulator.map.rover_grid[0][1]).to be_true
   end
 
-  it "should updates a rover's on a single instruction'" do
+  it "should update a rover on a single move instruction'" do
     instructions_01 = 'ML'
     @route_simulator.add_rover(0,0,'N',instructions_01)
     expect(@route_simulator.rovers[0].x_location).to eql(0)
@@ -86,7 +88,36 @@ eos
     @route_simulator.run_one_rover_instruction(@route_simulator.rovers[0])
     expect(@route_simulator.rovers[0].x_location).to eql(0)
     expect(@route_simulator.rovers[0].y_location).to eql(1)
+    expect(@route_simulator.rovers[0].facing_direction).to eql('N')
   end
+
+  it "should update a rover on a single turn instruction'" do
+    instructions_01 = 'LM'
+    @route_simulator.add_rover(0,0,'N',instructions_01)
+    expect(@route_simulator.rovers[0].x_location).to eql(0)
+    expect(@route_simulator.rovers[0].y_location).to eql(0)
+
+    @route_simulator.run_one_rover_instruction(@route_simulator.rovers[0])
+    expect(@route_simulator.rovers[0].x_location).to eql(0)
+    expect(@route_simulator.rovers[0].y_location).to eql(0)
+    expect(@route_simulator.rovers[0].facing_direction).to eql('W')
+  end
+
+
+  it "should update a rover on multiple instructions'" do
+    instructions_01 = 'ML'
+    @route_simulator.add_rover(0,0,'N',instructions_01)
+    expect(@route_simulator.rovers[0].x_location).to eql(0)
+    expect(@route_simulator.rovers[0].y_location).to eql(0)
+    expect(@route_simulator.rovers[0].facing_direction).to eql('N')
+
+    @route_simulator.run_rover_instructions(@route_simulator.rovers[0])
+    expect(@route_simulator.rovers[0].x_location).to eql(0)
+    expect(@route_simulator.rovers[0].y_location).to eql(1)
+    expect(@route_simulator.rovers[0].facing_direction).to eql('W')
+  end
+
+
 
   it "should not move a rover to an invalid location" do
     instructions_01 = 'ML'
@@ -117,10 +148,10 @@ eos
 
   it "should instantiate a map from a basic input" do
     @route_simulator.parse_input(@test_input)
-    expect(@route_simulator.map.rover_grid.size).to eql(5)
-    expect(@route_simulator.map.rover_grid[2].size).to eql(5)
-    expect(@route_simulator.map.photographed_grid.size).to eql(5)
-    expect(@route_simulator.map.photographed_grid[2].size).to eql(5)
+    expect(@route_simulator.map.rover_grid.size).to eql(6)
+    expect(@route_simulator.map.rover_grid[2].size).to eql(6)
+    expect(@route_simulator.map.photographed_grid.size).to eql(6)
+    expect(@route_simulator.map.photographed_grid[2].size).to eql(6)
   end
 
   it "should instantiate rovers from basic input" do
@@ -143,11 +174,3 @@ eos
   end
 
 end
-
-=begin
-
-loads in input and complains if invalid
-
-reports the final rover positions
-
-=end

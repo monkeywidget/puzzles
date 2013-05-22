@@ -38,6 +38,7 @@ class RouteSimulator
           x_size = $1.to_i
           y_size = $2.to_i
 
+          # the format is not the size, it's the greatest valid index
           init_map(x_size,y_size)
 
           state = :reading_rover_init
@@ -82,7 +83,7 @@ class RouteSimulator
   end
 
   def run_rover_instructions (rover)
-    rover.travel_instructions.split.size.times do
+    rover.travel_instructions.length.times do
       run_one_rover_instruction(rover)
     end
   end

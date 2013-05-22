@@ -13,15 +13,15 @@ All coordinates are integers and start at 0
   # @photographed_grid is an array of arrays, each cell holding "true" if the square has been photographed
   # RFE: track which angles have been photographed
 
-  def initialize ( x_size, y_size )
+  def initialize ( x_greatest, y_greatest )
 
     raise ArgumentError.new("Map size arguments must be positive integers") unless (
-      x_size.integer? and y_size.integer? and
-      x_size > 0 and y_size > 0
+      x_greatest.integer? and y_greatest.integer? and
+        x_greatest > 0 and y_greatest > 0
     )
 
-    @rover_grid = Array.new(x_size) { Array.new(y_size) }
-    @photographed_grid = Array.new(x_size) { Array.new(y_size) }
+    @rover_grid = Array.new(x_greatest+1) { Array.new(y_greatest+1) }
+    @photographed_grid = Array.new(x_greatest+1) { Array.new(y_greatest+1) }
   end
 
   def valid_coords?(x_coord, y_coord)
