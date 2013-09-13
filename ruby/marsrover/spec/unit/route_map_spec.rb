@@ -10,7 +10,7 @@ describe RouteMap do
   it "should create a grid from size in constructor" do
     expect(@route_map.valid_coords?(0,0)).to be_true
     expect(@route_map.valid_coords?(5,6)).to be_true
-    expect(@route_map.valid_coords?(6,6)).to be_false
+    expect(@route_map.valid_coords?(6 ,6)).to be_false
     expect(@route_map.valid_coords?(5,7)).to be_false
   end
 
