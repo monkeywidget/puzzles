@@ -10,7 +10,10 @@
 
 
 # 3. Split into single digits: 3 1 8 8 8
-def value_of_summed_digits_of( number )
+def value_of_summed_digits_of_this_less_than_100_number( number )
+
+  raise ArgumentError "number must be two digits" unless number < 100
+
   sum = 0
 
   if number >= 10
@@ -46,9 +49,9 @@ def luhn? (number)
 
     if current_power % 2 != 0
       # 2. Double value of every 2nd digit, starting at offset 1: 3 18 8 8
-      sum += value_of_summed_digits_of(this_digit *= 2)
+      sum += value_of_summed_digits_of_this_less_than_100_number(this_digit *= 2)
     else
-      sum += value_of_summed_digits_of(this_digit)
+      sum += value_of_summed_digits_of_this_less_than_100_number(this_digit)
     end
 
   end
