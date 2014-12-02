@@ -1,11 +1,11 @@
-# 1. removes duplicates chars from a string, 
+# Q1. remove dupe chars from a string, 
 #   maintaining the order in the final string
 #   of the first occurrence of the character
 #
 # input = 'anadsfasdfads'
 # output = 'andsf'
 
-# 2. removes duplicates chars from a string, 
+# Q2. remove dupe chars from a string, 
 #   maintaining the order in the final string
 #   of the LAST occurrence of the character
 #
