@@ -1,0 +1,17 @@
+.title {
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+.date {
+  font-style: italic;
+}
+
+span
+{
+    display: block;
+}
+
+div{
+  padding: 10px;
+}
