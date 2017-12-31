@@ -7,11 +7,13 @@ Renders a WordPress XML Export as simple HTML
 - prints to a HTML document
 - CSS-friendly for categories
 - keeps only data from:
-    - `<item>`
-        - `<title>`
-        - `<pubDate>`
-        - `<content>`
+    - `<item>` - currently a `div`
+        - `<title>` - currently a `h1`
+        - `<pubDate>` - currently a `i`
+        - `<content>` - currently a `div`
         - `<category>` (in CSS only)
+
+The idea of this was to make a HTML render that would paste into a Word or Google document and retain similar roles of formatting.
 
 To Customize
 ============

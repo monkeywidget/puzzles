@@ -18,10 +18,10 @@ all_items = doc.xpath('//item')
 puts "There are #{all_items.size} blog entries here"
 
 BLOG_POST_FOOTER = "</div>\n".freeze
-TITLE_HEADER = '<span class="title">'.freeze
-TITLE_FOOTER = '</span>'.freeze
-DATE_HEADER = '<span class="date">'.freeze
-DATE_FOOTER = '</span>'.freeze
+TITLE_HEADER = '<h1 class="title">'.freeze
+TITLE_FOOTER = '</h1>'.freeze
+DATE_HEADER = '<i class="date">'.freeze
+DATE_FOOTER = '</i><br />'.freeze
 CONTENT_HEADER = '<div class="content">'.freeze
 CONTENT_FOOTER = '</div>'.freeze
 
@@ -33,7 +33,7 @@ all_items.each do |item|
   pub_date = item.xpath('.//pubDate').children.to_s
 
   # looks like: <content:encoded><![CDATA[Some text is here]]></content:encoded>
-  content = item.xpath('.//content:encoded').children.text
+  content = item.xpath('.//content:encoded').children.text.gsub("\n","<br />\n")
 
   # may not be present
   # looks like: <category domain="category" nicename="foo"><![CDATA[foo]]></category>
