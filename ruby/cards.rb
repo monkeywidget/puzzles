@@ -22,6 +22,11 @@ puts 'in a single line!!!' # stunts!
 
 %w(♢ ♧ ♡ ♤).map { |suit| %w(A).push((2..10).to_a).push(%w(J Q K)).flatten.map {|ordinal| "#{ordinal}#{suit}" } }.flatten.shuffle[0..3].each { |i| puts i }
 
+puts 'in a single line!!!' # variant method calls: concat, sample vs shuffle/array
+
+['A'].concat((2..10).to_a.map{ |i| i.to_s }).concat(%w(J Q K)).map { |number| %w(♢ ♧ ♡ ♤).map { |suit| "#{number}#{suit}" } }.flatten.sample(4).each { |i| puts i }
+require 'benchmark'
+
 ############
 puts 'parameterized / testable:'
 
@@ -51,3 +56,23 @@ def deal(num_cards)
 end
 
 print_deck(deal(4))
+
+
+#####
+# I'm wondering which of the one-liners is faster...
+
+def foo_one_line
+  %w(♢ ♧ ♡ ♤).map { |suit| %w(A).push((2..10).to_a).push(%w(J Q K)).flatten.map {|ordinal| "#{ordinal}#{suit}" } }.flatten.shuffle[0..3]
+end
+
+def bar_one_line
+  ['A'].concat((2..10).to_a.map{ |i| i.to_s }).concat(%w(J Q K)).map { |number| %w(♢ ♧ ♡ ♤).map { |suit| "#{number}#{suit}" } }.flatten.sample(4)
+end
+
+require 'benchmark'
+
+foo_time = Benchmark.measure { 100.times { foo_one_line } }
+puts "push and shuffle: #{foo_time.real}"
+
+bar_time = Benchmark.measure { 100.times { bar_one_line } }
+puts "concat and sample: #{bar_time.real}"
