@@ -14,6 +14,7 @@
 # - assumes len(array) is fast!
 # - in the odd-numbered array case, the int division operation gives the previous element
 #   ...so the "middle" element is left untouched (as desired).
+# - float to int conversion is spendy, as is div operation
 
 # logic is easier to follow in the simple implementation
 def simple():
@@ -31,9 +32,19 @@ def simple():
 
     print array
 
+# I'm pretty sure this was explicitly forbidden in the interview, but python has parallel assignment:
+def parallel():
+    array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+    print array
+
+    for x in range (0, len(array)/2):
+        new_index = len(array) - 1 - x # for readability only
+        array[x],array[new_index] = array[new_index],array[x]
+
+    print array
+
 #  XOR: Just as a crazy restriction: What if we have only the index as a variable??
 #   three array writes, vs two for a more basic implementation (copy to a temp variable)
-#   float to int conversion is spendy, as is div operation
 #   triple XOR trick is not real pretty looking
 def xor():
 
@@ -53,6 +64,9 @@ def main():
     print "simple version:"
     simple()
 
+    print "parallel assignment version:"
+    parallel()
+    
     print "XOR version:"
     xor()
     
