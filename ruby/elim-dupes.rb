@@ -1,84 +1,76 @@
-# Q1. remove dupe chars from a string, 
+# Q1. remove dupe chars from a string,
 #   maintaining the order in the final string
 #   of the first occurrence of the character
 #
 # input = 'anadsfasdfads'
 # output = 'andsf'
 
-# Q2. remove dupe chars from a string, 
+# Q2. remove dupe chars from a string,
 #   maintaining the order in the final string
 #   of the LAST occurrence of the character
 #
 # input = 'anadsfasdfads'
 # output = 'nfads'
 
-
-
 require 'set'
 
-# passed a string
-def eliminateDuplicatesWithoutPreservingOrder (sourceString)
-  return Set.new(sourceString.split(//)).to_a.sort.join.to_s
+def without_dupes_unordered(sourceString)
+  Set.new(sourceString.split(//)).to_a.sort.join.to_s
 end
 
-# passed a string
-def eliminateDuplicatesAndPreserveOrderForFirst_v1 (sourceString)
+# Notes:
+# - each of these operations is O(n)
+# - this is similar but not exactly how ruby's uniq works
+# - has a invert and sort at the end
+def without_dupes_ordered(sourceString)
+  first_hash = {}
 
-  first_hash = Hash.new
-
-  # O(n)
-  sourceString.split(//).each_with_index do |single_char,index|
-    # add to hash
-    if not first_hash.has_key?(single_char)
-      # if not there yet, record the first index
-      first_hash[single_char] = index
-    end 
+  sourceString.split(//).each_with_index do |single_char, index|
+    first_hash[single_char] = index unless first_hash.key?(single_char)
   end
 
-  second_hash = Hash.new
-
-  # O(n)
-  first_hash.keys.each  do | this_key |
-    # for all the keys, hash by value in a new hash
-
-    # print "DEBUG: first hash: key=#{this_key} , value=#{first_hash[this_key]}\n"
-    # first_hash[this_key] = first_hash['a'] = 0
-    second_hash[first_hash[this_key]] = this_key
-    # second_hash[0] = 'a'
-  end
-  
-  output = ""
-
-  # output the new hash by keys (the original initial index of the char)
-  second_hash.keys.sort.each do | this_key |
-    # print "DEBUG: second hash: key=#{this_key} , value=#{second_hash[this_key]}\n"
-    output << second_hash[this_key]
-  end
-
-  return output
-
+  first_hash = first_hash.invert
+  first_hash.keys.sort.map { |key| first_hash[key] }.join
 end
 
+# abstracts the Hash into a Set
+def without_dupes_ordered_with_set(sourceString)
+  output = []
+  occurences = Set.new
 
-# passed a string
-def eliminateDuplicatesAndPreserveOrderForLast_v1 (sourceString)
-  # NOTE: slightly less efficient due to two reverses!
-  # the nicer way to do it is to refactor the above, 
-  #  removing the "if not first_hash.has_key?(single_char)" clause in the add to hash
-  return eliminateDuplicatesAndPreserveOrderForFirst_v1(sourceString.reverse).reverse
+  sourceString.split(//).each do |single_char|
+    unless occurences.include?(single_char)
+      output << single_char
+      occurences.add(single_char)
+    end
+  end
+
+  output.join
 end
 
-# v2:
-# TODO: REWRITE and instead of rehashing the hash, append to a string
-#   still keep track of presence by using a hash
+def without_dupes_last_ordered(sourceString)
+  without_dupes_ordered(sourceString.reverse).reverse
+end
 
+# More explicitly:
+# def without_dupes_last_ordered(sourceString)
+#   last_occurrences = {}
+#   sourceString.split(//).each_with_index { |char,index| last_occurrences[char] = index }
+#   last_occurrences = last_occurrences.invert
+#   last_occurrences.keys.sort.reverse.map { |key| last_occurrences[key] }.reverse.join
+# end
 
+def test_functions(test_string)
+  puts "#{test_string}:"
+  puts "\tUNORDERED: #{without_dupes_unordered(test_string)}"
 
+  puts "\tORDERED BY FIRST: #{without_dupes_ordered(test_string)}"
+  puts "\t   implented with Set: #{without_dupes_ordered_with_set(test_string)}"
 
-finalString = eliminateDuplicatesWithoutPreservingOrder("anadsfasdfads")
-print "UNORDERED: \"#{finalString}\"\n"
-finalString = eliminateDuplicatesAndPreserveOrderForFirst_v1("anadsfasdfads")
-print "ORDERED BY FIRST: \"#{finalString}\"\n"
-finalString = eliminateDuplicatesAndPreserveOrderForLast_v1("anadsfasdfads")
-print "ORDERED BY LAST: \"#{finalString}\"\n"
+  puts "\t   ruby uniq: #{test_string.split('').uniq.join}"
 
+  puts "\tORDERED BY LAST: #{without_dupes_last_ordered(test_string)}"
+end
+
+test_functions 'anadsfasdfads'
+test_functions 'floccinaucinihilipilification'
