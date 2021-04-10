@@ -6,40 +6,44 @@ require 'singleton'
 # How many different boxes can you make?
 # What are the contents of each?
 
-# I wanted this to be faster than a recursive implementation,
-# so I used a simple Dynamic Programming approach,
-# caching smaller results to build up to the problem being asked
-module DynamicCookies
-  class DynamicCookieBox
+if ARGV.size != 2
+  puts "\nUSAGE: cookie_counter.rb NUMBER_FLAVORS BOX_SIZE"
+  puts "\n\t EXAMPLE: % ruby cookie_counter.rb 3 6\n\n"
+  exit 1
+end
+
+types_of_cookies = ARGV[0].to_i
+box_size = ARGV[1].to_i
+
+module Cookies
+  class CookieBox
     attr_accessor :cookies
 
     def initialize
       # flavor default count of 0
-      @cookies = Hash[DynamicCookies::DynamicCookieUtils.instance.
+      @cookies = Hash[Cookies::CookieUtils.instance.
                        all_flavors.collect { |item| [item, 0] } ]
     end
 
     # a custom clone imeplementation
     def self.copy_from(box)
-      new_box = DynamicCookieBox.new
+      new_box = CookieBox.new
 
       new_box.cookies = box.cookies.dup
       new_box
     end
 
     def self.empty_box
-      @@null_box ||= DynamicCookieBox.new
+      @@null_box ||= CookieBox.new
     end
 
-    # @param sample_box Hash like {'A'=>2,'B'=>0,'C'=>0}
-    # - if this is an empty Hash it will make the corresponding key
     # @return String like "A=2,B=0,C=0"
     def key
       return @key if defined?(@key)
 
       new_key = []
 
-      DynamicCookies::DynamicCookieUtils.instance.
+      Cookies::CookieUtils.instance.
                        all_flavors.sort.each do |flavor|
         quantity = @cookies[flavor] || 0 # flavor default count of 0
         new_key << "#{flavor}=#{quantity}"
@@ -64,13 +68,13 @@ module DynamicCookies
      @cookies.keys.sort.each do |flavor|
        count = @cookies[flavor]
 
-       DynamicCookies::DynamicCookieUtils.instance.
+       Cookies::CookieUtils.instance.
         render_cookies(flavor, count)
      end
     end
   end
 
-  class DynamicCookieUtils
+  class CookieUtils
     include Singleton
 
     ANSI_COLORS = [ { name: 'red', ansi: 31 },
@@ -105,16 +109,45 @@ module DynamicCookies
       $stdout.print "\e[#{color_code}m#{text}\e[0m"
     end
   end
+end
 
+# TODO: Method 1: recursive/iterative brute force
+# start with a set of all flavors
+# LOOP:
+# flavor A: For count BOX_SIZE down to 0
+#   prepend count of flavor A for all of:
+#      recurse with all except flavor A, for the remaining cookie spaces
+# remove flavor A from the set and iterate again
+# END LOOP
+module RecursiveCookies
+  class RecursiveCookieComboCounter
+    def initialize(number_cookie_flavors, box_size)
+    end
+
+    def render_combos
+    end
+  end
+end
+
+# start = Time.now
+# RecursiveCookies::RecursiveCookieComboCounter.
+#   new(types_of_cookies, box_size).render_combos
+# stop = Time.now
+# puts "The recursive solution took #{stop - start} seconds"
+
+# Method 2: Dynamic brute force
+# I wanted this to be faster than a recursive implementation,
+# so I used a simple Dynamic Programming approach,
+# caching smaller results to build up to the problem being asked
+module DynamicCookies
   class DynamicCookieComboCounter
-    def initialize(num_flavors, box_size)
-      number_cookie_flavors = ARGV[0].to_i
-      @box_size = ARGV[1].to_i
+    def initialize(number_cookie_flavors, box_size)
+      @box_size = box_size
 
       puts "\n\nHow many combinations of #{number_cookie_flavors} cookies " \
            "can fit in a #{@box_size} cookie box?"
 
-      @utils = DynamicCookies::DynamicCookieUtils.instance
+      @utils = Cookies::CookieUtils.instance
       @utils.initialize_flavors(number_cookie_flavors)
 
       @box_combinations = Array.new(@box_size + 1) { Hash.new }
@@ -128,7 +161,7 @@ module DynamicCookies
     end
 
     def null_box
-      DynamicCookies::DynamicCookieBox.empty_box
+      Cookies::CookieBox.empty_box
     end
 
     # assumes smaller box sizes have been rendered
@@ -141,7 +174,7 @@ module DynamicCookies
       @utils.all_flavors.each do |flavor|
         # build a new box from each smaller box:
         smaller_boxes.each_value do |box|
-          new_box = DynamicCookies::DynamicCookieBox.copy_from(box) # clone and build from here
+          new_box = Cookies::CookieBox.copy_from(box) # clone and build from here
           new_box.add(flavor, 1)
 
           next unless new_box.valid? # if it makes an invalid, don't make it
@@ -168,13 +201,10 @@ module DynamicCookies
   end
 end
 
-if ARGV.size != 2
-  puts "\nUSAGE: cookie_counter.rb NUMBER_FLAVORS BOX_SIZE"
-  puts "\n\t EXAMPLE: % ruby cookie_counter.rb 3 6\n\n"
-  exit 1
-end
-
-DynamicCookies::DynamicCookieComboCounter.new(ARGV[0].to_i, ARGV[1].to_i).render_combos
+start = Time.now
+DynamicCookies::DynamicCookieComboCounter.new(types_of_cookies, box_size).render_combos
+stop = Time.now
+puts "The dynamic solution took #{stop - start} seconds"
 
 # development Notes
 # examples use 3 flavors
@@ -209,3 +239,29 @@ DynamicCookies::DynamicCookieComboCounter.new(ARGV[0].to_i, ARGV[1].to_i).render
 # and I needed to share a sort of global variable for the flavors list
 # and color maps, so I'm making a Singleton "Utils" class.
 # I may as well put the ANSI methods in there too
+
+# Method 3: Efficiency
+# The efficient solution to this relates to: combinations n choose k,
+# alternately "index Pascal's Triangle"
+module MathCookies
+  class CombinationsCalculator
+    def initialize(number_cookie_flavors, box_size)
+      # TODO: TBI
+    end
+
+    def factorial(n)
+      (1..n.to_i).reduce(1, :*)
+    end
+
+    def combinations(n, k)
+      n = n.to_i
+      k = k.to_i
+      factorial(n) / (factorial(k) * factorial(n-k))
+    end
+  end
+end
+
+# start = Time.now
+# MathCookies::CombinationsCalculator.new(types_of_cookies, box_size).render_combos
+# stop = Time.now
+# puts "The math solution took #{stop - start} seconds"
