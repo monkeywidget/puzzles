@@ -265,3 +265,54 @@ end
 # MathCookies::CombinationsCalculator.new(types_of_cookies, box_size).render_combos
 # stop = Time.now
 # puts "The math solution took #{stop - start} seconds"
+
+
+
+# Brute force: every combination:
+
+# A, B, C
+
+# AAAAAA
+
+# AAAAAB
+# AAAAAC
+
+# AAAABB
+# AAAABC
+# AAAACC
+
+# 2 elements with 2 types: there are 3 combinations
+# BB
+# BC
+# CC
+
+# 3 elements with 2 types = previous x2 - duplicates = (3 x 2) - duplicates = 6 - 2 = 4
+# (BB BC CC)(B, C) = BBB BBC BCC + BBC BCC CCC = BBB BBC BCC CCC
+
+# 4 elements with 2 types = previous x2 - duplicates = 4x2 - 3 = 8 - 3 = 5
+# (BBB BBC BCC CCC)(B,C) = BBBB BBBC BBCC BCCC + BBBC BBCC BCCC CCCC =  
+# BBBB BBBC BBCC BCCC CCCC 
+
+# 5 elements with 2 types = previous x2 - duplicates = 5x2 - 4 = 10 - 4 = 6
+# (BBBB BBBC BBCC BCCC CCCC)(B,C) = 
+# BBBBB BBBBC BBBCC BBCCC BCCCC + BBBBC BBBCC BBCCC BCCCC CCCCC  =
+# BBBBB BBBBC BBBCC BBCCC BCCCC CCCCC
+
+# 6 elements with 2 types = (6 x 2) - 5 = 12 -5 = 7 
+
+# now we go backwards:
+
+# 6 elements with 2 types = 0 of element A = 7
+# 5 elements with 2 types = 1 of element A = 6
+# 4 elements with 2 types = 2 of element A = 5
+# 3 elements with 2 types = 3 of element A = 4
+# 2 elements with 2 types = 4 of element A = 3
+# 1 element with 2 types =  5 of element A = 2
+# 0 elements with 2 types =  6 of element A = 1
+
+# so the answer is 7 + 6 + 5 + 4 + 3 + 2 + 1 = summation of 7
+# we have a formula for that: n(n+1)/2 where n = 7, 7x8/2 = 28
+# but how do we get this for n total things with m categories?
+# that is 
+# f(n,m) = ?
+
