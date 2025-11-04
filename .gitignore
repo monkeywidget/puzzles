@@ -1,0 +1,62 @@
+
+# Local archives or Lambda packages
+*.zip
+
+# OS and editor junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.env/
+env/
+.venv/
+.local/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+
+# Podman / Docker artifacts
+*.tar
+*.img
+*.oci
+podman-volume/
+
+# Build and distribution directories
+build/
+dist/
+*.egg-info/
+
+# Editor settings
+.vscode/
+.idea/
+
+# Credentials and AWS configs (never commit these)
+.aws/
+.aws-session.env
+.last_promoted_image
+aws.env
+*.pem
+*.key
+*.crt
+
+# Local test results and reports
+htmlcov/
+.coverage
+.cache/
+pytest_cache/
+*.cover
+ruby/xml2html/index.html
